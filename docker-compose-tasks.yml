@@ -1,0 +1,80 @@
+version: '2'
+services:
+
+  build_agent:
+    environment:
+      EUREKA_URL: eureka
+      KAFKA_URL: kafka
+    build: ./Build
+    volumes:
+      - /home/imbatch1/Task_Source:/Task_Source
+    container_name: build_agent
+    image: build
+    ports:
+      - 8099:8099
+
+  clone:
+    environment:
+      EUREKA_URL: eureka
+      KAFKA_URL: kafka
+    build: ./Clone
+    volumes:
+      - /home/imbatch1/Task_Source:/Task_Source
+    container_name: clone
+    image: clone
+    ports:
+      - 8098:8098
+      
+  run:
+    environment:
+      EUREKA_URL: eureka
+      KAFKA_URL: kafka
+    build: ./Run
+    volumes:
+      - /home/imbatch1/Task_Source:/Task_Source
+    container_name: run
+    image: run
+    ports:
+      - 8097:8097
+
+  uppercase:
+    environment:
+      EUREKA_URL: eureka
+      KAFKA_URL: kafka
+    build: ./UpperCase
+    container_name: uppercase
+    image: uppercase
+    ports:
+      - 8096:8096
+      
+  test:
+    environment:
+      EUREKA_URL: eureka
+      KAFKA_URL: kafka
+    build: ./Test
+    volumes:
+      - /home/imbatch1/Task_Source:/Task_Source
+    container_name: test
+    image: test
+    ports:
+      - 8095:8095
+      
+  email-task:
+    environment:
+      EUREKA_URL: eureka
+      KAFKA_URL: kafka
+    build: ./emailService
+    container_name: email-task
+    image: email
+    ports:
+      - 8094:8094
+
+  twitter-task:
+    environment:
+      EUREKA_URL: eureka
+      KAFKA_URL: kafka
+    build: ./TwitterService
+    container_name: twitter-task
+    image: twitter-task
+    ports:
+      - 8093:8093
